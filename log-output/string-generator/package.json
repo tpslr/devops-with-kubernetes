@@ -1,11 +1,11 @@
 {
-  "name": "log-output",
+  "name": "log-output-generator",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy-local": "docker build -t log-output . && k3d image import log-output && kubectl apply -f manifests",
+    "docker-build": "docker build -t log-output-generator .",
     "build": "tsc"
   },
   "keywords": [],
@@ -13,10 +13,7 @@
   "license": "",
   "description": "",
   "devDependencies": {
-    "@types/express": "^5.0.3",
+    "@types/node": "^24.5.1",
     "typescript": "^5.9.2"
-  },
-  "dependencies": {
-    "express": "^5.1.0"
   }
 }

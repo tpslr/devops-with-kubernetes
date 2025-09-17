@@ -12,10 +12,23 @@ spec:
       labels:
         app: log-output
     spec:
+      volumes:
+      - name: log-output-volume
+        emptyDir: {}
       containers:
-      - name: log-output
-        image: log-output
+      - name: string-generator
+        image: log-output-generator
         imagePullPolicy: Never
+        volumeMounts:
+          - mountPath: /data
+            name: log-output-volume
+
+      - name: string-server
+        image: log-output-server
+        imagePullPolicy: Never
+        volumeMounts:
+          - mountPath: /data
+            name: log-output-volume
         env:
           - name: PORT
             value: "3000"
