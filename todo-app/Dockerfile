@@ -20,6 +20,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 # Copy only what is needed for runtime
 COPY package*.json ./
+COPY static ./static
 COPY --from=deps /app/node_modules ./node_modules
 # Remove dev dependencies
 RUN npm prune --omit=dev

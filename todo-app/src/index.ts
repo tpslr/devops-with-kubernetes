@@ -11,10 +11,6 @@ const server = app.listen(port, () => {
 });
 
 
-app.get("/", (req, res) => {
-    res.send("Hello, World!");
-});
-
 app.get("/picture", async (req, res, next) => {
     try {
         const picture = await getPicture();
@@ -28,6 +24,8 @@ app.get("/stop", (_req, res) => {
     res.send("Shutting down...");
     process.exit(0);
 });
+
+app.use(express.static("static"));
 
 const shutdown = (signal: string) => {
     console.log(`Received ${signal}, shutting down...`);
