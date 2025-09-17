@@ -9,6 +9,11 @@ const server = app.listen(port, () => {
     console.log(`Server started in port ${port}`);
 });
 
+
+app.get("/", (req, res) => {
+    res.send("Hello, World!");
+});
+
 const shutdown = (signal: string) => {
     console.log(`Received ${signal}, shutting down...`);
     server.close(() => {
