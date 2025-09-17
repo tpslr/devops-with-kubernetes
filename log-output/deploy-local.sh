@@ -12,7 +12,7 @@ npm run docker-build
 cd ..
 
 echo "Importing images to kubernetes cluster..."
-k3d image import log-output-generator log-output-server
+k3d image import log-output-generator log-output-server -m direct
 
 echo "Deploying manifests..."
 kubectl apply -f manifests
