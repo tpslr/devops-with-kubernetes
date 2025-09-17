@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy-local": "docker build -t todo-app . && k3d image import todo-app -m direct && kubectl apply -f ./manifests",
     "build": "tsc"
   },
   "keywords": [],

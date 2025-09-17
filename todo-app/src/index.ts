@@ -1,4 +1,5 @@
 import express from "express";
+import { getPicture } from "./picture.js";
 
 
 const app = express();
@@ -12,6 +13,20 @@ const server = app.listen(port, () => {
 
 app.get("/", (req, res) => {
     res.send("Hello, World!");
+});
+
+app.get("/picture", async (req, res, next) => {
+    try {
+        const picture = await getPicture();
+        res.type("image/webp").send(picture);
+    } catch (error) {
+        next(error);
+    }
+});
+
+app.get("/stop", (_req, res) => {
+    res.send("Shutting down...");
+    process.exit(0);
 });
 
 const shutdown = (signal: string) => {

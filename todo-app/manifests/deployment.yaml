@@ -12,6 +12,9 @@ spec:
       labels:
         app: todo-app
     spec:
+      volumes:
+      - name: image-cache
+        emptyDir: {}
       containers:
       - name: todo-app
         image: todo-app
@@ -19,3 +22,8 @@ spec:
         env:
         - name: PORT
           value: "3000"
+        - name: IMAGE_CACHE_DURATION
+          value: "600000" # 10 minutes in milliseconds
+        volumeMounts:
+        - name: image-cache
+          mountPath: /image-cache
