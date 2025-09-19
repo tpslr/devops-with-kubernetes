@@ -4,9 +4,194 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo App</title>
+    <script src="./index.js" defer></script>
+    <link href="./index.css" rel="stylesheet">
+    <style> /* general styles (included inline to speed up initial page load) */
+        body {
+            margin: 0;
+            background-color: #101020;
+            --ui-highlight: #0080ff;
+            --ui-background: #202025;
+            --ui-background-80: #202025CC;
+            --text-color: whitesmoke;
+            --ui-text-color: #101010;
+            --link-color: #4f7be2;
+            --clr-back-3: #3a3a3f;
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-color);
+        }
+        @media (prefers-color-scheme: light) {
+            body {
+                /* blinding white */
+                background-color: #ffffff;
+                /* slightly less blinding white */
+                --ui-background: #e0e0e0;
+                --text-color: #202020;
+            }
+        }
+        img.header-image {
+            width: 100%;
+            height: 25vh;
+            object-fit: cover;
+            object-position: center;
+            user-select: none;
+            max-height: 25vh;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0));
+        }
+        header > div.header-shade {
+            background-color: var(--ui-background);
+            opacity: 0.85;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+        header > div.header-shade > a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: inline-block;
+            width: fit-content;
+        }
+        header > div.header-shade > a > h1 {
+            padding: 10px;
+            margin: 0;
+            font-weight: normal;
+            line-height: 1;
+            width: fit-content;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+
+    <style> /* loader styles (included inline to speed up initial page load) */
+        div#loading-wrap {
+            padding-top: 100px;
+        }
+        div.loader {
+            position: absolute;
+            width: 100px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        div.loader.loader-no {
+            position: relative;
+            width: 100px;
+            margin: auto;
+            top: unset;
+            left: unset;
+            transform: unset;
+        }
+        div.loader > div {
+            position: relative;
+            margin: 0px auto;
+            width: 100%;
+        }
+        div.loader > div:before {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+        div.loader > div > svg {
+            -webkit-animation: loader-rotate 2s linear infinite;
+            animation: loader-rotate 2s linear infinite;
+            height: 100%;
+            -webkit-transform-origin: center center;
+            -ms-transform-origin: center center;
+            transform-origin: center center;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        div.loader > div > svg > circle {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+            stroke-width: 3;
+            fill: none;
+            -webkit-animation: loader-dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+            animation: loader-dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+            stroke-linecap: round;
+            stroke: #6131d1;
+        }
+        @-webkit-keyframes 
+        loader-rotate {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes 
+        loader-rotate {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @-webkit-keyframes 
+        loader-dash {
+            0% {
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -35;
+            }
+            100% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -124;
+            }
+        }
+        @keyframes 
+        loader-dash {
+            0% {
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -35;
+            }
+            100% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -124;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Todo App</h1>
-    <img src="/picture" alt="Random Picture"/>
+    <header>
+        <img class="header-image" src="/picture" alt="Header Image"/>
+        <div class="header-shade">
+            <a href="/"><h1 class="title">todo app</h1></a>
+        </div>
+    </header>
+    
+    <section id="todos" class="todos">
+        <div id="createbar" class="centerX">
+            <div class="input"><input id="todo-input" name="todo" type="text" autocomplete="off"></div>
+            <button class="uibutton createbutton">Create todo</button>
+        </div>
+    </section>
+
+    <div id="loading-wrap">
+        <div class="loader loader-no"><div><svg viewBox="25 25 50 50"><circle cx="50" cy="50" r="20"></circle></svg></div></div>
+    </div>
+
+    <template id="todo-template">
+        <div class="todo-box">
+            <div class="titlebox border-lighten">
+                <h2 class="title">Todo title</h2>
+            </div>
+            <div class="todo-content-box border-lighten">
+                <span class="todo-content">Todo content</span>
+            </div>
+        </div>
+    </template>
 </body>
 </html>
