@@ -35,7 +35,7 @@ async function getPicture(): Promise<Buffer> {
 }
 
 async function downloadPicture(): Promise<Buffer> {
-    const response = await fetch("https://picsum.photos/1200.webp");
+    const response = await fetch("https://picsum.photos/1200/300.webp");
 
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
