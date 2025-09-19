@@ -13,6 +13,10 @@ app.get("/pingpong", async (_req, res) => {
 });
 
 
+app.get("/pings", async (_req, res) => {
+    res.sendFile("/ping-pong/pingpong.txt");
+});
+
 if (!existsSync("/ping-pong/pingpong.txt")) {
     await writeFile("/ping-pong/pingpong.txt", "0");
 }

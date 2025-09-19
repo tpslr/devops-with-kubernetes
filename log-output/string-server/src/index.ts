@@ -7,8 +7,11 @@ const app = express();
 
 app.get("/status", async (req, res, next) => {
     const data = await readFile("/data/string.txt", "utf-8");
-    const pong = await readFile("/ping-pong/pingpong.txt", "utf-8");
-    res.status(200).type("text/plain").send(data + "\nPing / Pongs " + pong);
+
+    const pingsReq = await fetch("http://ping-pong-svc:2345/pings");
+    const pingsCount = await pingsReq.text();
+
+    res.status(200).type("text/plain").send(data + "\nPing / Pongs " + pingsCount);
 });
 
 

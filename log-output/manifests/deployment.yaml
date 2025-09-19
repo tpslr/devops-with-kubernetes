@@ -14,10 +14,6 @@ spec:
       volumes:
       - name: log-output-volume
         emptyDir: {}
-      - name: ping-pong
-        persistentVolumeClaim:
-          claimName: ping-pong-claim
-          readOnly: true
       containers:
       - name: string-generator
         image: log-output-generator
@@ -32,9 +28,6 @@ spec:
         volumeMounts:
           - mountPath: /data
             name: log-output-volume
-          - mountPath: /ping-pong
-            name: ping-pong
-            readOnly: true
         env:
           - name: PORT
             value: "3000"
