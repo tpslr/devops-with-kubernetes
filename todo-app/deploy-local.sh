@@ -15,4 +15,5 @@ echo "Importing images to kubernetes cluster..."
 k3d image import todo-app todo-app-backend -m direct
 
 echo "Deploying manifests..."
+kubectl delete -f manifests --ignore-not-found
 kubectl apply -f manifests
