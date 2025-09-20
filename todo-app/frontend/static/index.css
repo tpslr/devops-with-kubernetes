@@ -42,7 +42,8 @@ div#createbar {
     height: 32px;
     width: 100px;
     right: 8px;
-    top: 8px;
+    top: 50%;
+    transform: translateY(-50%);
     position: absolute;
 }
 
@@ -223,22 +224,23 @@ div.input {
     display: inline-block;
     margin-bottom: -2px;
 }
-div.input > input {
+div.input > textarea {
     background-color: var(--clr-back-3);
     color: var(--text-color);
-    margin: -1px;
     height: calc(100% + 2px);
     width: calc(100% + 2px);
     border: none;
     padding: 0;
     font-size: 20px;
+    resize: none;
 
+    margin: 4px 0 2px 0;
 }
-div.input > input:focus {
+div.input > textarea:focus {
     border: none;
     outline: none!important;
 }
-div.input > input:-webkit-autofill, input:-internal-autofill-selected {
+div.input > textarea:-webkit-autofill, textarea:-internal-autofill-selected {
     box-shadow: 0px 0px 0px 20px var(--clr-back-3) inset;
     caret-color: var(--text-color);
     -webkit-text-fill-color: var(--text-color);
