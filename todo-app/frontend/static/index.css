@@ -214,7 +214,6 @@ button.redbutton {
 div.input {
     background-color: var(--clr-back-3);
     width: calc(100% - 125px);
-    height: 32px;
     border: none;
     border-radius: 3px;
     padding: 0;
