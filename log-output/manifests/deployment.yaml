@@ -15,6 +15,12 @@ spec:
       volumes:
       - name: log-output-volume
         emptyDir: {}
+      - name: config-volume
+        configMap:
+          name: log-output-config
+          items:
+            - key: information.txt
+              path: information.txt
       containers:
       - name: string-generator
         image: log-output-generator
@@ -29,6 +35,13 @@ spec:
         volumeMounts:
           - mountPath: /data
             name: log-output-volume
+          - mountPath: /config
+            name: config-volume
         env:
           - name: PORT
             value: "3000"
+          - name: MESSAGE
+            valueFrom:
+              configMapKeyRef:
+                name: log-output-config
+                key: message

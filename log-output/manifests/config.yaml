@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: log-output-config
+  namespace: excercises
+data:
+  information.txt: |
+    this text is from file
+  message: hello world
