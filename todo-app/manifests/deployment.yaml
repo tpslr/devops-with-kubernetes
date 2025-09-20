@@ -25,6 +25,8 @@ spec:
           value: "3000"
         - name: IMAGE_CACHE_DURATION
           value: "600000" # 10 minutes in milliseconds
+        - name: PICTURE_SOURCE_URL
+          value: "https://picsum.photos/1200/300.webp"
         volumeMounts:
         - name: image-cache
           mountPath: /image-cache

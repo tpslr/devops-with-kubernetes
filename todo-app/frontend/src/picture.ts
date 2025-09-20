@@ -7,6 +7,7 @@ let imageCache: {
 } | null = null;
 
 const IMAGE_CACHE_DURATION = Number(process.env.IMAGE_CACHE_DURATION) || 10 * 60 * 1000; // default to 10 minutes
+const PICTURE_SOURCE_URL = process.env.PICTURE_SOURCE_URL || "https://picsum.photos/1200/300.webp";
 
 async function getPicture(): Promise<Buffer> {
     // check local cache
@@ -35,7 +36,7 @@ async function getPicture(): Promise<Buffer> {
 }
 
 async function downloadPicture(): Promise<Buffer> {
-    const response = await fetch("https://picsum.photos/1200/300.webp");
+    const response = await fetch(PICTURE_SOURCE_URL);
 
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
