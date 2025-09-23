@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: excercises
+data:
+  PG_DATABASE: "pingpong"
+  PG_HOST: "postgres"
+  PG_PORT: "5432"
+  PG_USER: "postgres"
+  PG_PASSWORD: "password"
