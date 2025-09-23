@@ -2,6 +2,6 @@
 command ran to deploy to kubernetes:
 
 ```
-node run deploy-local
+./deploy-local.sh
 ```
 

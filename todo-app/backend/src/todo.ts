@@ -1,8 +1,14 @@
 import { randomUUID } from "crypto";
 import type { UUID } from "crypto";
+import { sql } from "./db.js";
 
-const todos = new Map<UUID, Todo>();
 
+await sql`CREATE TABLE IF NOT EXISTS todos (
+    id UUID PRIMARY KEY,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    color TEXT NOT NULL
+)`;
 
 type Todo = {
     id: UUID;
@@ -12,16 +18,16 @@ type Todo = {
 }
 
 
-function getTodos(): Todo[] {
-    return Array.from(todos.values());
+async function getTodos(): Promise<Todo[]> {
+    return await sql<Todo[]>`SELECT * FROM todos`;
 }
 
-function addTodo(todo: Omit<Todo, "id">): Todo {
+async function addTodo(todo: Omit<Todo, "id">): Promise<Todo> {
     const id = randomUUID();
 
     const fullTodo = { id, ...todo };
 
-    todos.set(id, fullTodo);
+    await sql`INSERT INTO todos ${sql(fullTodo, "id", "title", "content", "color")}`;
 
     return fullTodo;
 }
