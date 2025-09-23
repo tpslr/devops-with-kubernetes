@@ -31,3 +31,4 @@
 - [2.9.](https://github.com/tpslr/devops-with-kubernetes/tree/2.9/todo-app)
 - [2.10.](https://github.com/tpslr/devops-with-kubernetes/tree/2.10/todo-app)
 - [3.1.](https://github.com/tpslr/devops-with-kubernetes/tree/3.1/ping-pong)
+- [3.2.](https://github.com/tpslr/devops-with-kubernetes/tree/3.2/ping-pong)

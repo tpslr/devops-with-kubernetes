@@ -25,6 +25,10 @@ app.get("/pings", async (_req, res) => {
     res.send(await getPingCount());
 });
 
+app.get("/", (req, res) => {
+    res.send("ok");
+});
+
 
 const port = Number(process.env.PORT) || 3000;
 app.listen(port, () => {
