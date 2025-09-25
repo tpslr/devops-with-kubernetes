@@ -12,7 +12,7 @@ async function getPingCount() {
     return counter?.count ?? 0;
 }
 
-app.get("/pingpong", async (_req, res) => {
+app.get("/", async (_req, res) => {
     const count = await getPingCount();
 
     await sql`INSERT INTO pings DEFAULT VALUES`;
@@ -23,10 +23,6 @@ app.get("/pingpong", async (_req, res) => {
 
 app.get("/pings", async (_req, res) => {
     res.send(await getPingCount());
-});
-
-app.get("/", (req, res) => {
-    res.send("ok");
 });
 
 
