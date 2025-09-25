@@ -20,6 +20,12 @@ spec:
         envFrom:
           - configMapRef:
               name: postgres-config
+        env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config
+                key: PG_PASSWORD
         ports:
         - containerPort: 5432
         volumeMounts:
