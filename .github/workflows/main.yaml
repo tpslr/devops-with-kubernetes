@@ -21,12 +21,12 @@ jobs:
   build-publish-deploy:
     name: Build, Publish and Deploy
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: todo-app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: move to todo-app directory
-        run: cd todo-app
       
       - name: Auth to Google Cloud
         uses: google-github-actions/auth@v2
