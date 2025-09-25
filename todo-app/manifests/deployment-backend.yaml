@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: todo-app-backend
-  namespace: project
 spec:
   replicas: 1
   selector:
@@ -18,8 +17,7 @@ spec:
         emptyDir: {}
       containers:
       - name: todo-app-backend
-        image: todo-app-backend
-        imagePullPolicy: Never
+        image: todo-backend-image
         env:
         - name: PORT
           value: "3000"

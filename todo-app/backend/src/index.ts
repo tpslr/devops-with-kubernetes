@@ -27,6 +27,10 @@ app.get("/api/todos", async (req, res) => {
     res.json(await getTodos());
 });
 
+app.get("/", (_req, res) => {
+    res.send("OK");
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });

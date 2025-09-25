@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: project
+
+resources:
+  - manifests/deployment.yaml
+  - manifests/deployment-backend.yaml
+  - manifests/service.yaml
+  - manifests/service-backend.yaml
+
+  - manifests/postgres.yaml
+  - manifests/postgres-config.yaml
+
+  - manifests/wikipedia-job.yaml
+
+  - manifests/ingress.yaml
+
+images:
+  - name: todo-frontend-image
+    newName: europe-north1-docker.pkg.dev/dwk-gke-473012/dwk/todo-frontend-image
+  - name: todo-backend-image
+    newName: europe-north1-docker.pkg.dev/dwk-gke-473012/dwk/todo-backend-image
