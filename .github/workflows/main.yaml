@@ -1,0 +1,79 @@
+name: Release application
+
+on:
+  push:
+    paths:
+      - 'todo-app/**'
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: dwk-cluster
+  GKE_ZONE: europe-north1-b
+  REGISTRY: europe-north1-docker.pkg.dev
+  REPOSITORY: dwk
+  FRONTEND_IMAGE: todo-frontend-image
+  BACKEND_IMAGE: todo-backend-image
+  APP_DEPLOYMENT_NAME: todo-app
+  APP_BACKEND_DEPLOYMENT_NAME: todo-app-backend
+  BRANCH: ${{ github.ref_name }}
+
+jobs:
+  build-publish-deploy:
+    name: Build, Publish and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: move to todo-app directory
+        run: cd todo-app
+      
+      - name: Auth to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GKE_SA_KEY }}'
+      
+      - name: Set up GKE
+        uses: google-github-actions/setup-gcloud@v2
+      
+      - run: gcloud info
+
+      - run: gcloud --quiet auth configure-docker
+
+      - name: 'Get GKE credentials'
+        uses: 'google-github-actions/get-gke-credentials@v2'
+        with:
+          cluster_name: '${{ env.GKE_CLUSTER }}'
+          project_id: '${{ env.PROJECT_ID }}'
+          location: '${{ env.GKE_ZONE }}'
+
+      - name : 'Form the frontend image name'
+        run: echo "FRONTEND_IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$FRONTEND_IMAGE:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+
+      - name: Build and push frontend image
+        run: |
+          docker build -t $FRONTEND_IMAGE_TAG frontend
+          docker push $FRONTEND_IMAGE_TAG
+      
+      - name : 'Form the backend image name'
+        run: echo "BACKEND_IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$BACKEND_IMAGE:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+      
+      - name: Build and push backend image
+        run: |
+          docker build -t $BACKEND_IMAGE_TAG backend
+          docker push $BACKEND_IMAGE_TAG
+
+      - name: Set up Kustomize
+        uses: imranismail/setup-kustomize@v2.1.0
+
+      - name: Update kustomization images
+        run: |
+          kustomize edit set image $FRONTEND_IMAGE=$FRONTEND_IMAGE_TAG
+          kustomize edit set image $BACKEND_IMAGE=$BACKEND_IMAGE_TAG
+
+          kustomize build . | kubectl apply -f -
+
+          kubectl rollout status deployment/$APP_DEPLOYMENT_NAME
+          kubectl rollout status deployment/$APP_BACKEND_DEPLOYMENT_NAME
+
+          kubectl get services -o wide
