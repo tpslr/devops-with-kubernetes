@@ -9,7 +9,7 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: dwk-cluster
   GKE_ZONE: europe-north1-b
-  BRANCH: ${{ github.ref_name }}
+  BRANCH: ${{ github.event.ref }}
 jobs:
   cleanup:
     if: github.event.ref_type == 'branch'
@@ -30,10 +30,10 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           location: ${{ env.GKE_ZONE }}
 
-      - name: Delete Kubernetes namespace (if not main)
+      - name: Delete Kubernetes namespace (if not master)
         run: |
-          if [ "$BRANCH" = "main" ]; then
-            echo "Branch is main; skipping namespace deletion"
+          if [ "$BRANCH" = "master" ]; then
+            echo "Branch is master; skipping namespace deletion"
             exit 0
           fi
           if kubectl get namespace "$BRANCH" >/dev/null 2>&1; then
