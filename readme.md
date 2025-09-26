@@ -41,3 +41,29 @@
 - [3.6.](https://github.com/tpslr/devops-with-kubernetes/tree/3.6/todo-app)
 - [3.7.](https://github.com/tpslr/devops-with-kubernetes/tree/3.7/todo-app)
 - [3.8.](https://github.com/tpslr/devops-with-kubernetes/tree/3.8/todo-app)
+
+- 3.9.
+    DBaaS vs DIY
+    
+#### DBaaS
+Pros
+- Fast and easy setup
+- Low maintenance
+- Easy & automatic scaling
+- Possibility of easy backups with just a few clicks
+
+Cons
+- Vendor lock-in
+- Lower control, possibly limited features
+    
+#### DIY
+Pros
+- Customizable to workload
+- Possibly lower operational costs at larger scales
+- Control of data storage
+
+Cons
+- More complex and work intensive to set up
+- Requires ongoing maintenance
+- Backups have to be set up manually
+- Harder to scale
