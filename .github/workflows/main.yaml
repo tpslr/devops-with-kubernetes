@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - 'todo-app/**'
+    tags-ignore:
+      - "**"
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
